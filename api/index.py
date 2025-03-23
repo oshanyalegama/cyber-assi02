@@ -14,7 +14,11 @@ from cryptography.hazmat.primitives import serialization
 app = Flask(__name__)
 keys = {}  # Dictionary to store keys with their IDs
 
+VALID_AES_KEY_SIZES = {128, 192, 256}
+
 def generate_aes_key(key_size):
+    if key_size not in VALID_AES_KEY_SIZES:
+        return None
     key = os.urandom(key_size // 8)
     return base64.b64encode(key).decode()
 
