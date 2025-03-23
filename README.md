@@ -8,7 +8,7 @@ The API is hosted on Vercel and can be accessed at:
 https://cyber-assi02-git-main-oshan-yalegamas-projects.vercel.app
 ```
 
-## API Endpoints
+## API  Methods
 
 ### Key Generation
 **Endpoint:** `POST /generate-key`
