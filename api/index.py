@@ -35,6 +35,10 @@ def generate_rsa_key():
     )
     return base64.b64encode(private_pem).decode(), base64.b64encode(public_pem).decode()
 
+@app.route('/')
+def home():
+  return '<h1>This is an API used for cryptography developed by Team Encryptos</h1>'
+
 @app.route("/generate-key", methods=["POST"])
 def generate_key():
     data = request.json
