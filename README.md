@@ -1,28 +1,115 @@
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fexamples%2Ftree%2Fmain%2Fpython%2Fflask3&demo-title=Flask%203%20%2B%20Vercel&demo-description=Use%20Flask%203%20on%20Vercel%20with%20Serverless%20Functions%20using%20the%20Python%20Runtime.&demo-url=https%3A%2F%2Fflask3-python-template.vercel.app%2F&demo-image=https://assets.vercel.com/image/upload/v1669994156/random/flask.png)
+# Cryptographic API
 
-# Flask + Vercel
+This project provides a RESTful API for cryptographic operations, including key generation, encryption, decryption, hashing, and hash verification.
 
-This example shows how to use Flask 3 on Vercel with Serverless Functions using the [Python Runtime](https://vercel.com/docs/concepts/functions/serverless-functions/runtimes/python).
-
-## Demo
-
-https://flask-python-template.vercel.app/
-
-## How it Works
-
-This example uses the Web Server Gateway Interface (WSGI) with Flask to enable handling requests on Vercel with Serverless Functions.
-
-## Running Locally
-
-```bash
-npm i -g vercel
-vercel dev
+## Hosting Details
+The API is hosted on Vercel and can be accessed at:
+```
+https://cyber-assi02-git-main-oshan-yalegamas-projects.vercel.app
 ```
 
-Your Flask application is now available at `http://localhost:3000`.
+## API Endpoints
 
-## One-Click Deploy
+### Key Generation
+**Endpoint:** `POST /generate-key`
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=vercel-examples):
+**Request Body:**
+```json
+{
+  "key_type": "AES",  // string
+  "key_size": 256      // integer (Allowed values: 128, 192, 256)
+}
+```
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fexamples%2Ftree%2Fmain%2Fpython%2Fflask3&demo-title=Flask%203%20%2B%20Vercel&demo-description=Use%20Flask%203%20on%20Vercel%20with%20Serverless%20Functions%20using%20the%20Python%20Runtime.&demo-url=https%3A%2F%2Fflask3-python-template.vercel.app%2F&demo-image=https://assets.vercel.com/image/upload/v1669994156/random/flask.png)
+**Response:**
+```json
+{
+  "key_id": "12345",
+  "key_value": "base64-encoded-key"
+}
+```
+
+### Encryption
+**Endpoint:** `POST /encrypt`
+
+**Request Body:**
+```json
+{
+  "key_id": "12345",   // string
+  "plaintext": "message-to-encrypt", // string
+  "algorithm": "AES"  // string (AES or RSA)
+}
+```
+
+**Response:**
+```json
+{
+  "ciphertext": "base64-encoded-ciphertext"
+}
+```
+
+### Decryption
+**Endpoint:** `POST /decrypt`
+
+**Request Body:**
+```json
+{
+  "key_id": "12345",   // string
+  "ciphertext": "base64-encoded-ciphertext", // string
+  "algorithm": "AES"  // string (AES or RSA)
+}
+```
+
+**Response:**
+```json
+{
+  "plaintext": "original-message"
+}
+```
+
+### Hashing
+**Endpoint:** `POST /generate-hash`
+
+**Request Body:**
+```json
+{
+  "data": "message-to-hash",  // string
+  "algorithm": "SHA-256"  // string (SHA-256, SHA-512)
+}
+```
+
+**Response:**
+```json
+{
+  "hash_value": "base64-encoded-hash",
+  "algorithm": "SHA-256"
+}
+```
+
+### Hash Verification
+**Endpoint:** `POST /verify-hash`
+
+**Request Body:**
+```json
+{
+  "data": "message-to-verify", // string
+  "hash_value": "base64-encoded-hash", // string
+  "algorithm": "SHA-256"  // string (SHA-256, SHA-512)
+}
+```
+
+**Response (Valid Case):**
+```json
+{
+  "is_valid": true,
+  "message": "Hash matches the data."
+}
+```
+
+**Response (Invalid Case):**
+```json
+{
+  "is_valid": false,
+  "message": "Hash does not match the data."
+}
+```
