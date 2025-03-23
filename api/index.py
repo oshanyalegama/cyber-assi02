@@ -52,6 +52,8 @@ def generate_key():
     
     if key_type == "AES":
         key_value = generate_aes_key(key_size)
+        if key_value is None:
+            return jsonify({"error": "Invalid AES key size. Choose from 128, 192, or 256 bits."}), 400
     elif key_type == "RSA":
         private_key, public_key = generate_rsa_key()
         keys[key_id] = {"private": private_key, "public": public_key}
